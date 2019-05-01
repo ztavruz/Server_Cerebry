@@ -32,8 +32,9 @@ class AudioSessionRepository implements AudioSessionRepositoryInterface
 
     /**
      * @param AudioSession $audioSession
+     * @return AudioSession
      */
-    public function save(AudioSession $audioSession): void
+    public function save(AudioSession $audioSession): AudioSession
     {
         /**
          * set id into object

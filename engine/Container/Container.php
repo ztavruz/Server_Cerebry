@@ -8,12 +8,12 @@ class Container
 {
     private $definitions = [];
 
-    public function set(string $id, $definition):void
+    public function set($id, $definition): void
     {
         $this->definitions[$id] = $definition;
     }
 
-    public function get(string $id)
+    public function get($id)
     {
         return $this->definitions[$id];
     }
