@@ -1,0 +1,17 @@
+{
+    "name": "ztavruz/server_cerebry",
+    "require": {
+        "gabordemooij/redbean": "^5.3"
+    },
+    "autoload":{
+        "psr-4":{
+            "Engine\\":"engine"           
+        }
+    },
+    "authors": [
+        {
+            "name": "Djon Alex",
+            "email": "mr.ztavruz1987@mail.ru"
+        }
+    ]
+}
