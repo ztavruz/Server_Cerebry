@@ -5,14 +5,14 @@ namespace App\Service;
 
 
 use App\Entity\AudioSession;
-use App\Repository\AudioSessionRepositoryInterface;
+use App\Repository\AudioSessionRepository;
 
 class AudioSessionService
 {
 
     private $repository;
 
-    public function __construct(AudioSessionRepositoryInterface $repository)
+    public function __construct(AudioSessionRepository $repository)
     {
         $this->repository = $repository;
     }
