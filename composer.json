@@ -1,11 +1,15 @@
 {
     "name": "ztavruz/server_cerebry",
     "require": {
-        "gabordemooij/redbean": "^5.3"
+        "gabordemooij/redbean": "^5.3",
+      "ext-json": "*",
+        "symfony/serializer": "^4.2",
+        "symfony/property-access": "^4.2"
     },
     "autoload":{
         "psr-4":{
-            "Engine\\":"engine"           
+            "Engine\\":"engine",
+            "App\\": "app"
         }
     },
     "authors": [
