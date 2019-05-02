@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Audiosessions\Service;
 
+use App\AbstractClasses\Service;
+use App\Audiosessions\Entity\AudioSession;
+use App\Audiosessions\Repository\AudioSessionRepository;
 
-use App\Entity\AudioSession;
-use App\Repository\AudioSessionRepository;
-
-class AudioSessionService
+class AudioSessionService implements Service
 {
 
     private $repository;
@@ -19,7 +19,7 @@ class AudioSessionService
 
     public function list(): array
     {
-        return $this->repository->all();
+        return $this->repository->getAll();
     }
 
     public function create(string $name, string $description, string $image, int $price): AudioSession

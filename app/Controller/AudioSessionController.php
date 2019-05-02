@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Service\AudioSessionService;
 
-class AudioSessionController extends AbstractController
+class AudioSessionController extends Controller
 {
     private $service;
 
@@ -15,14 +15,14 @@ class AudioSessionController extends AbstractController
         $this->service = $service;
     }
 
-    public function list()
+    public function listAll()
     {
-        $session = $this->service->list();
+        $listAudioSessions = $this->service->list();
 
-        echo $this->json($session);
+        echo $this->json($listAudioSessions);
     }
 
-    public function create()
+    public function createAudioSession()
     {
         /**
          * POST

@@ -7,8 +7,8 @@ use Engine\Router\Router;
 
 $router = new Router();
 
-$router->register("/audio/create", AudioSessionController::class, "create");
-$router->register('/audio/list', AudioSessionController::class, 'list');
+$router->register("/audio/create", AudioSessionController::class, "createAudiosession");
+$router->register('/audio/list', AudioSessionController::class, 'listAll');
 
 $router->register('/users/signup', UsersController::class, 'signup');
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\AudioSessions\Entity;
 
 
 class AudioSession
@@ -16,13 +16,13 @@ class AudioSession
 
     private $price;
 
-    public function __construct(string $name, string $description, string $image, int $price)
-    {
-        $this->name = $name;
-        $this->description = $description;
-        $this->image = $image;
-        $this->price = $price;
-    }
+        public function __construct(string $name, string $description, string $image, int $price)
+        {
+            $this->name = $name;
+            $this->description = $description;
+            $this->image = $image;
+            $this->price = $price;
+        }
 
 
     /**

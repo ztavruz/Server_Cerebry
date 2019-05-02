@@ -1,34 +1,34 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace App\AudioSessions\Repository;
 
-
-use App\Entity\AudioSession;
 use RedBeanPHP\R;
+use App\AudioSessions\Entity\AudioSession;
 
-class AudioSessionRepository implements AudioSessionRepositoryInterface
-{
+class AudioSessionRepository implements Repository
+{   
+    /**
+     * @return AudioSession[]
+     */
+    public function getAll(): array
+    {
+        $allAudioSessions = R::getAll("SELECT * FROM audiosessions");
 
-    public function one(int $id): AudioSession
+        $listAudioSessions = [];
+        foreach ($allAudioSessions as $audioSession){
+            $listAudioSessions[] = $this->convertToObject($audioSession);
+        }
+
+        return $listAudioSessions;
+    }
+
+    public function getOne(int $id): AudioSession
     {
         $data = R::getRow("SELECT * FROM audiosessions WHERE id = ?", [$id]);
         return $this->convertToObject($data);
     }
-    /**
-     * @return AudioSession[]
-     */
-    public function all(): array
-    {
-        $data = R::getAll("SELECT * FROM audiosessions");
-
-        $result = [];
-        foreach ($data as $arr){
-            $result[] = $this->convertToObject($arr);
-        }
-
-        return $result;
-    }
+    
 
     /**
      * @param AudioSession $audioSession
@@ -36,9 +36,6 @@ class AudioSessionRepository implements AudioSessionRepositoryInterface
      */
     public function save(AudioSession $audioSession): AudioSession
     {
-        /**
-         * set id into object
-         */
         $bean = R::dispense("audiosessions");
 
         $bean->name = $audioSession->getName();
@@ -49,7 +46,7 @@ class AudioSessionRepository implements AudioSessionRepositoryInterface
         R::store($bean);
     }
 
-    private function convertToObject(array $data): AudioSession
+    public function convertToObject(array $data): AudioSession
     {
 
         // Получаем отражение класса
