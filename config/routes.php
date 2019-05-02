@@ -11,6 +11,9 @@ $router->register("/audio/create", AudioSessionController::class, "createAudiose
 $router->register('/audio/list', AudioSessionController::class, 'listAll');
 
 $router->register('/users/signup', UsersController::class, 'signup');
+$router->register('/users/registration', UsersController::class, 'registrationNewUser');
+$router->register('/users/autorization', UsersController::class, 'autorizationUser');
+
 
 
 return $router;

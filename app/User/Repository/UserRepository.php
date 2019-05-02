@@ -5,8 +5,9 @@ namespace App\User\Repository;
 
 use RedBeanPHP\R;
 use App\User\Entity\User;
+use App\User\Entity\UserAccount;
 
-class UsersRepository
+class UserRepository
 {
     public function getAll(): array
     {
@@ -24,38 +25,27 @@ class UsersRepository
         return $this->convertToObject($thisUser);
     }
 
-    public function save(User $user): User
-    {
-        $bean = R::dispense("users");
-
-        $bean->name = $user->getName();
-        $bean->description = $user->getDescription();
-        $bean->price = $user->getPrice();
-        $bean->image = $user->getImage();
-
-        $bean->firstName = $user->getFirstName();
-        $bean->lastName = $user->getLastName();
-        $bean->middleName = $user->getMiddleName();
-        $bean->password = $user->getPassword();
-        $bean->birthday = $user->getBirthday();
-        $bean->email = $user->getEmail();
-        $bean->approved = $user->getApproved(); 
-        $bean->phone = $user->getPhone();
-        $bean->role = $user->getRole();
-        $bean->registration_date = $user->getRegistration_date();
-        $bean->region = $user->getRegion();
-        $bean->city = $user->getCity();
-        $bean->street = $user->getStreet();
-        $bean->build = $user->getBuild();
-        $bean->flat = $user->getFlat();
-        $bean->zip_code = $user->getZip_code();
-        $bean->skype = $user->getSkype();
-        $bean->gender = $user->getGender();
-
-        R::store($bean);
+    public function getAccount(UserDTO $userDataAuthorization){
+        $email = $userDataAuthorization->getEmail();
+        $password = $userDataAuthorization->getPassword();
+        $userDataBd = R::getRow('SELECT FROM users WHERE email = ?', [$email]);
+        if($email == $userDataBd['email'] && $password == $userDataBd['password']){
+            return $userDataBd;
+        }
+        return "Пользователь не найден";
     }
 
-
+    // регистрация пользователя в БД
+    public function saveAccount(UserAccount $account)
+    {   
+        {
+            $bean = R::dispense("users");
+            $bean->email = $account->getEmail();
+            $bean->password = $account->getPassword();
+            R::store($bean);
+        }
+    
+    }
 
     public function convertToObject(array $data): User
     {

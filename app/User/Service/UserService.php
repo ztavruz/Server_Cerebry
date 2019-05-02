@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\User\Service;
 
-use App\AbstractClasses\Service;
-use App\User\Entity\User;
-use App\User\Repository\UsersRepository;
+use App\User\EntityUserDTO;
+use App\User\Entity\UserAccount;
+use App\User\Repository\UserRepository;
 
-class UserService implements Service
+class UserService
 {
     private $repository;
 
@@ -20,17 +20,25 @@ class UserService implements Service
         return $this->repository->getAll();
     }
 
-    public function create( string $firstName, string $lastName, string $middleName, int $gender,
-                            int $password, string $birthday, string $email, string $skype, int $phone,
-                            string $region, string $city, string $street, int $build, string $flat,
-                            bool $approved,int $role,int $registration_date, string $zip_code )
-    {
-        $newUser = new User( $firstName, $lastName, $middleName,  $gender,
-                             $password, $birthday, $email, $skype,  $phone,
-                             $region, $city, $street,  $build, $flat,
-                             $approved, $role, $registration_date, $zip_code);
-        $this->repository->save($newUser);    
-        
-        return $newUser;
+    public function newUserAccount(array $content)
+    {   
+        $userData = new UserDTO();
+        $userData->email = $content['email'];
+        $userData->email = $content['password'];
+
+        $userDataRegistracion = new UserAccount($userData);
+        $this->repository->saveAccount($userDataRegistracion);
+        return $userDataRegistracion;
     }
+    public function authorUser()
+    {
+        $userData = new UserDTO();
+        $userData->email = $content['email'];
+        $userData->email = $content['password'];
+        
+        $userDataAuthorization = new UserAccount($userData);
+        $this->repository->getAccount($userDataAuthorization);
+        return $userDataAuthorization;
+    }
+
 }

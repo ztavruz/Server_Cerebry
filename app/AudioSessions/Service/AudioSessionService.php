@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace App\Audiosessions\Service;
 
-use App\AbstractClasses\Service;
 use App\Audiosessions\Entity\AudioSession;
 use App\Audiosessions\Repository\AudioSessionRepository;
 
-class AudioSessionService implements Service
+class AudioSessionService 
 {
 
     private $repository;

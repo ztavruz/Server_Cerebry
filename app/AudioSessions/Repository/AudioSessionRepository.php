@@ -6,7 +6,7 @@ namespace App\AudioSessions\Repository;
 use RedBeanPHP\R;
 use App\AudioSessions\Entity\AudioSession;
 
-class AudioSessionRepository implements Repository
+class AudioSessionRepository
 {   
     /**
      * @return AudioSession[]

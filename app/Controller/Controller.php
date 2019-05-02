@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\AbstractClasses;
+namespace App\Controller;
 
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
