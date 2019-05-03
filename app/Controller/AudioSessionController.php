@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 
-use App\Service\AudioSessionService;
+use App\Controller\Controller;
+use App\AudioSessions\Service\AudioSessionService;
 
 class AudioSessionController extends Controller
 {

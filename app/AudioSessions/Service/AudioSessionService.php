@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Audiosessions\Service;
+namespace App\AudioSessions\Service;
 
-use App\Audiosessions\Entity\AudioSession;
-use App\Audiosessions\Repository\AudioSessionRepository;
+use App\AudioSessions\Entity\AudioSession;
+use App\AudioSessions\Repository\AudioSessionRepository;
 
 class AudioSessionService 
 {

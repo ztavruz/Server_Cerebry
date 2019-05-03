@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\User\Service;
 
-use App\User\EntityUserDTO;
+use App\User\Entity\UserDTO;
 use App\User\Entity\UserAccount;
 use App\User\Repository\UserRepository;
 
@@ -11,7 +11,7 @@ class UserService
 {
     private $repository;
 
-    public function __construct(UsersRepository $repository){
+    public function __construct(UserRepository $repository){
         $this->repository = $repository;
     }
 

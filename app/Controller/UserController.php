@@ -3,19 +3,22 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\UsersService;
+use App\User\Service\UserService;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * @var UsersService
      */
     private $service;
 
-    public function __construct(UsersService $service)
+    public function __construct(UserService $service)
     {
 
         $this->service = $service;
+    }
+    public function hello(){
+        echo 'hello';
     }
 
     public function listAll(){
