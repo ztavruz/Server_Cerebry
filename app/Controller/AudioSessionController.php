@@ -21,6 +21,7 @@ class AudioSessionController extends Controller
         $listAudioSessions = $this->service->list();
 
         echo $this->json($listAudioSessions);
+        
     }
 
     public function createAudioSession()

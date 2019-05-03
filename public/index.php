@@ -6,7 +6,8 @@ use Engine\Container\Container;
 use RedBeanPHP\R as R;
 
 if(!R::testConnection()){
-    R::setup("mysql:host=localhost;dbname=test", "root", "1234");
+    //R::setup("mysql:host=localhost;dbname=test", "root", "1234");
+    R::setup("mysql:host=localhost;dbname=u0301994_ServerCerebry", "ztavruz", "ztavruz123");
 }
 
 
