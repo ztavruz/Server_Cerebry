@@ -5,13 +5,13 @@ namespace App\Controller;
 
 
 use App\Controller\Controller;
-use App\AudioSessions\Service\AudioSessionService;
+use App\AudioSession\Service\ServiceAudioSession;
 
-class AudioSessionController extends Controller
+class ControllerAudioSession extends Controller
 {
     private $service;
 
-    public function __construct(AudioSessionService $service)
+    public function __construct(ServiceAudioSession $service)
     {
         $this->service = $service;
     }

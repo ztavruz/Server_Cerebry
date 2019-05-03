@@ -5,13 +5,13 @@ namespace App\User\Service;
 
 use App\User\Entity\UserDTO;
 use App\User\Entity\UserAccount;
-use App\User\Repository\UserRepository;
+use App\User\Repository\RepositoryUser;
 
-class UserService
+class ServiceUser
 {
     private $repository;
 
-    public function __construct(UserRepository $repository){
+    public function __construct(RepositoryUser $repository){
         $this->repository = $repository;
     }
 

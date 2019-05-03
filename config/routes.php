@@ -1,19 +1,19 @@
 <?php
 
 
-use App\Controller\AudioSessionController;
-use App\Controller\UserController;
+use App\Controller\ControllerAudioSession;
+use App\Controller\ControllerUser;
 use Engine\Router\Router;
 
 $router = new Router();
 
-$router->register("/audio/create", AudioSessionController::class, "createAudiosession");
-$router->register('/audio/list', AudioSessionController::class, 'listAll');
+$router->register("/audio/create", ControllerAudioSession::class, "createAudiosession");
+$router->register('/audio/list', ControllerAudioSession::class, 'listAll');
 
-$router->register('/users/signup', UserController::class, 'signup');
-$router->register('/users/registration', UserController::class, 'registrationNewUser');
-$router->register('/users/autorization', UserController::class, 'autorizationUser');
-$router->register('/', UserController::class, 'hello');
+$router->register('/users/signup', ControllerUser::class, 'signup');
+$router->register('/users/registration', ControllerUser::class, 'registrationNewUser');
+$router->register('/users/autorization', ControllerUser::class, 'autorizationUser');
+$router->register('/', ControllerUser::class, 'hello');
 
 
 

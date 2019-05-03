@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\AudioSessions\Repository;
+namespace App\AudioSession\Repository;
 
 use RedBeanPHP\R;
-use App\AudioSessions\Entity\AudioSession;
+use App\AudioSession\Entity\AudioSession;
 
-class AudioSessionRepository
+class RepositoryAudioSession
 {   
     /**
      * @return AudioSession[]

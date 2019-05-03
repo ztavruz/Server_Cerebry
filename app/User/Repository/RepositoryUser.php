@@ -7,7 +7,7 @@ use RedBeanPHP\R;
 use App\User\Entity\User;
 use App\User\Entity\UserAccount;
 
-class UserRepository
+class RepositoryUser
 {
     public function getAll(): array
     {

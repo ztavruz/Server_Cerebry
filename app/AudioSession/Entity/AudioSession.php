@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\AudioSessions\Entity;
+namespace App\AudioSession\Entity;
 
 
 class AudioSession

@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace App\AudioSessions\Service;
+namespace App\AudioSession\Service;
 
-use App\AudioSessions\Entity\AudioSession;
-use App\AudioSessions\Repository\AudioSessionRepository;
+use App\AudioSession\Entity\AudioSession;
+use App\AudioSession\Repository\RepositoryAudioSession;
 
-class AudioSessionService 
+class ServiceAudioSession
 {
 
     private $repository;
 
-    public function __construct(AudioSessionRepository $repository)
+    public function __construct(RepositoryAudioSession $repository)
     {
         $this->repository = $repository;
     }
