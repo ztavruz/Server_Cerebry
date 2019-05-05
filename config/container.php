@@ -2,25 +2,25 @@
 
 use Engine\Container\Container;
 
-use App\Controller\ControllerAudioSession;
-use App\AudioSession\Service\ServiceAudioSession;
-use App\AudioSession\Repository\RepositoryAudioSession;
+use App\Controller\AudioSessionController;
+use App\AudioSession\Service\AudioSessionService;
+use App\AudioSession\Repository\AudioSessionRepository;
 
-use App\Controller\ControllerUser;
-use App\User\Service\ServiceUser;
-use App\User\Repository\RepositoryUser;
+use App\Controller\UserController;
+use App\User\Service\UserService;
+use App\User\Repository\UserRepository;
 
 $container = new Container();
 
 
-$container->set(RepositoryAudioSession::class, new RepositoryAudioSession());
-$container->set(ServiceAudioSession::class, new ServiceAudioSession( $container->get(RepositoryAudioSession::class) ));
-$container->set(ControllerAudioSession::class, new ControllerAudioSession( $container->get(ServiceAudioSession::class) ));
+$container->set(AudioSessionRepository::class, new AudioSessionRepository());
+$container->set(AudioSessionService::class, new AudioSessionService( $container->get(AudioSessionRepository::class) ));
+$container->set(AudioSessionController::class, new AudioSessionController( $container->get(AudioSessionService::class) ));
 
 
-$container->set(RepositoryUser::class, new RepositoryUser());
-$container->set(ServiceUser::class, new ServiceUser( $container->get(RepositoryUser::class) ));
-$container->set(ControllerUser::class, new ControllerUser( $container->get(ServiceUser::class) ));
+$container->set(UserRepository::class, new UserRepository());
+$container->set(UserService::class, new UserService( $container->get(UserRepository::class) ));
+$container->set(UserController::class, new UserController( $container->get(UserService::class) ));
 
 
 

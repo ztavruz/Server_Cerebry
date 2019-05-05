@@ -19,8 +19,9 @@ class Router
      * @return array
      */
     public function match(string $url): array
-    {
-
+    {   
+        var_dump($url);
+        
         if( isset($this->routes[$url]) ){
             return $this->routes[$url];
         }

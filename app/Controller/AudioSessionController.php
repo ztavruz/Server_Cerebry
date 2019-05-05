@@ -5,13 +5,13 @@ namespace App\Controller;
 
 
 use App\Controller\Controller;
-use App\AudioSession\Service\ServiceAudioSession;
+use App\AudioSession\Service\AudioSessionService;
 
-class ControllerAudioSession extends Controller
+class AudioSessionController extends Controller
 {
     private $service;
 
-    public function __construct(ServiceAudioSession $service)
+    public function __construct(AudioSessionService $service)
     {
         $this->service = $service;
     }
@@ -27,21 +27,13 @@ class ControllerAudioSession extends Controller
     public function createAudioSession()
     {
         /**
-         * POST
-         * JSON
          *  name: string,
          *  description: string,
          *  image: string,
          *  price: int
-         *
          */
-
         $content = json_decode(file_get_contents('php://input'), true);
-
-        $audioSession = $this->service->create(
-            $content['name'], $content['description'],
-            $content['image'], $content['price']
-        );
+        $audioSession = $this->service->create($content);
 
         echo $this->json($audioSession);
     }

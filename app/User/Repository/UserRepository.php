@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace App\User\Repository;
 
 use RedBeanPHP\R;
-use App\User\Entity\User;
-use App\User\Entity\UserAccount;
+use App\User\Entity\UserDTO;
 
-class RepositoryUser
+class UserRepository
 {
     public function getAll(): array
     {
@@ -29,14 +28,14 @@ class RepositoryUser
         $email = $userDataAuthorization->getEmail();
         $password = $userDataAuthorization->getPassword();
         $userDataBd = R::getRow('SELECT FROM users WHERE email = ?', [$email]);
-        if($email == $userDataBd['email'] && $password == $userDataBd['password']){
+        if(!empty($userDataBd)){
             return $userDataBd;
         }
         return "Пользователь не найден";
     }
 
     // регистрация пользователя в БД
-    public function saveAccount(UserAccount $account)
+    public function saveAccount(UserDTO $account)
     {   
         {
             $bean = R::dispense("users");
@@ -45,6 +44,12 @@ class RepositoryUser
             R::store($bean);
         }
     
+    }
+    
+    public function getDataAccount(UserDTO $user)
+    {
+        $id = $user->getId();
+        $userDataBd = R::getRow('SELECT FROM users WHERE id = ?', [$id]);
     }
 
     public function convertToObject(array $data): User

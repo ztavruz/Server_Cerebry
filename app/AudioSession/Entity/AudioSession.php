@@ -3,18 +3,24 @@ declare(strict_types=1);
 
 namespace App\AudioSession\Entity;
 
+    // id
+    // name
+    // image
+    // discription
+    // cost
+    // audiosession_id
+    // abonement_id
+
 
 class AudioSession
 {
     private $id;
-
     private $name;
-
-    private $description;
-
     private $image;
-
-    private $price;
+    private $description;
+    private $cost;
+    private $audio_for_audiosession;
+    private $abonement_id;
 
         public function __construct(string $name, string $description, string $image, int $price)
         {

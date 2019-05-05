@@ -1,0 +1,123 @@
+
+ -------------------------------------------user--------------------------------------------------
+                                    //создать пользователя
+                                    //получить пользователя зб БД по id
+                                    //изменить данные пользователя 
+                                    //добавить абонемент пользователю 
+                                    //удалить абонемент у пользователя
+                                    //
+                                    //получить всех пользователей
+                                    //аблокировать пользователя 
+                                    //удалить пользователя
+
+user
+    id
+	firstName
+	lastName
+	middleName
+	password
+	birthday
+	email
+	approved (bool)
+	phone
+	role (Roles)
+    registration_date (timestamp)
+    region
+   	city
+    street
+    build
+    flat
+    zip_code
+    skype
+    gender (Enum 0, 1)
+    abonements_for_user[]
+
+user_for_city
+    id
+    user_id;
+    city_id;
+
+
+ -------------------------------------------audio--------------------------------------------------
+                                    //создать аудио
+                                    //получить аудио зб БД по id
+                                    //изменить аудио 
+                                    //добавить аудио в аудиосессию
+                                    //удалить аудио из аудиосессии
+audio
+    id
+    name
+    image
+    discription
+    cost    
+    audio_id 
+    audiosession_id     
+
+audio_for_audiosession              (if value not found)
+    audio_id 
+    audiosession_id
+
+
+ -------------------------------------------audiosession--------------------------------------------------  
+                                    //создать аудиосессию
+                                    //получить аудиосессию из БД по id
+                                    //изменить аудиосессию 
+                                    //добавить аудиосессию в абонемент
+                                    //удалить аудиосессию из абонемента      
+audiosession
+    id
+    name
+    image
+    discription
+    cost
+    audiosession_id
+    Abonement_id
+
+audiosession_for_abonement           (if value not found)
+    id
+    audiosession_id
+    Abonement_id
+
+
+ -------------------------------------------comment--------------------------------------------------
+                                    //создать комментарий
+                                    //получить комментарий из БД по id
+                                    //изменить комментарий 
+                                    //добавить комментарий к аудиосессии
+                                    //удалить комментарий из аудиосессии
+comment
+    id
+    user_id
+    audiosession_id
+    time
+    approved
+    comment_id
+    audiosession_id
+
+comments_for_audiosession            (if value not found)
+    id
+    comment_id
+    audiosession_id
+    
+
+ -------------------------------------------abonement--------------------------------------------------
+                                    //создать абонемент
+                                    //получить абонемент из БД по id
+                                    //изменить абонемент 
+                                    //присвоить абонемент пользователю
+                                    //удалить абонемент у пользователя
+abonement
+    id
+    name
+    time_start
+    time_end
+    cost 
+    abonement_id
+    user_id
+
+abonement_for_user
+    id
+    abonement_id
+    user_id
+
+---------------------------------------------------------------------------------------
