@@ -71,12 +71,12 @@ audiosession
     discription
     cost
     audiosession_id
-    Abonement_id
+    abonement_id
 
 audiosession_for_abonement           (if value not found)
     id
     audiosession_id
-    Abonement_id
+    abonement_id
 
 
  -------------------------------------------comment--------------------------------------------------
