@@ -16,12 +16,15 @@ if(!R::testConnection()){
 
 $url = $_SERVER['REQUEST_URI'];
 
+// return include_once(__DIR__.'./PreloaderCSS3/index.html');
+
 /** @var Container $container */
 $container = require_once dirname(__DIR__) . "/config/container.php";
 
 
 /** @var \Engine\Router\Router $router */
 $router = require_once dirname(__DIR__) . "/config/routes.php";
+
 
 
 $params = $router->match($url);
