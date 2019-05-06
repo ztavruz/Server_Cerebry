@@ -12,10 +12,10 @@ if(!R::testConnection()){
 }
 
 $newAudio = [
-    'name'=> 'Аудио1',
-    'image' => 'картинка',
-    'description' => 'Какоето описание',
-    'cost' => 'цена'
+    'name'=> 'Аудио112',
+    'image' => 'картинка122',
+    'description' => 'Какоето описание122',
+    'cost' => 'цена12321'
 ];
 $getFromBd =[
     'id' => '2'
@@ -39,9 +39,9 @@ $removeFromAudiosession = [
 
 // > php -f view.php
 $test = new AudioService(new AudioRepository());
-// var_dump($test->createInBd($newAudio));
+var_dump($test->createAudio($newAudio));
 // var_dump($test->getFromBd($getFromBd));
 // var_dump($test->changeToBd($changeToBd));
 // var_dump($test->addInAudiosession($addInAudiosession));
-var_dump($test->removeFromAudiosession($removeFromAudiosession));
+// var_dump($test->removeFromAudiosession($removeFromAudiosession));
 
