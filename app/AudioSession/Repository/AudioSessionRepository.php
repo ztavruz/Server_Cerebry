@@ -4,82 +4,76 @@ declare(strict_types=1);
 namespace App\AudioSession\Repository;
 
 use RedBeanPHP\R;
-use App\AudioSession\Entity\AudioSessionDTO;
+use App\AudioSession\Entity\AudioSession;
 use App\AudioSession\Entity\AudioForAUdiosessionDTO;
 
 class AudioSessionRepository
 {   
-    /**
-     * @return AudioSessionDTO[]
-     */
-    public function getAll(): array
+    //создать аудисессию
+    public function saveInBd(Audio $newAudioSession)
     {
-        $allAudioSessions = R::getAll("SELECT * FROM audiosessions");
-
-        $listAudioSessions = [];
-        foreach ($allAudioSessions as $audioSession){
-            $listAudioSessions[] = $this->convertToObject($audioSession);
-        }
-
-        return $listAudioSessions;
-    }
-
-    public function getOneAudioSession(int $id): AudioSessionDTO
-    {
-        $data = R::getRow("SELECT * FROM audiosessions WHERE id = ?", [$id]);
-        return $this->convertToObject($data);
-    }
-    
-
-    /**
-     * @param AudioSession $audioSession
-     * @return AudioSession
-     */
-    public function saveAudiosession(AudioSessionDTO $audioSession): AudioSessionDTO
-    {
-        $bean = R::dispense("audiosessions");
-
-        $bean->name = $audioSession->getName();
-        $bean->image = $audioSession->getImage();
-        $bean->description = $audioSession->getDescription();
-        $bean->price = $audioSession->getPrice();
-
+        $bean = R::dispense("audios");
+        $bean->name = $newAudioSession->getName();
+        $bean->image = $newAudioSession->getImage();
+        $bean->description = $newAudioSession->getDescription();
+        $bean->cost = $newAudioSession->getCost();
         R::store($bean);
     }
 
-    public function getAudiosessionBD(AudioSessionDTO $audioSession_id ){
-        
-        $thisAudiosession = R::getRow('SELECT * FROM audiosessions WHERE id =?', [$audioSession_id]);
-        $thisAudiosession = $this->convertToObject($thisAudiosession);
-
-        $audioForAudiosession = R::getRow('SELECT * FROM audio_for_audiosession WHERE audiosession_id = ?',[$audiosession_id]);
-        $audioForAudiosession = $this->convertToObject($audioForAudiosession);
-
-        $thisAudiosession['audio_for_audiosession'] = $audioForAudiosession;
-        $dataAudiosession = new AudiosessionDTO(); 
-
-        $audioForAudiosession = $this->convertToObject($thisAudiosession);
-
+    //получить аудисессию зб БД по id
+    public function getFromBd(Audio $thisAudioSession)
+    {
+        $thisAudioSession_id = $thisAudioSession->getId();
+        $thisAudioSession = R::getRow("SELECT * FROM audios WHERE id = ?", [$thisAudioSession_id]);
+        return $this->convertToObject($thisAudioSession);
+        // return $thisAudio;
     }
 
-    
+    //изменить аудисессию 
+    public function changeToBd(Audio $changeableAudioSession)
+    {   // id
+        // name 
+        // Image
+        // discription
+        // cost  
+        $changeableAudioSession_id = $changeableAudioSession->getId();
+
+        $bean = R::load('audios', $changeableAudioSession_id);
+        $bean->name = $changeableAudioSession->getName();
+        $bean->image= $changeableAudioSession->getImage();
+        $bean->description = $changeableAudioSession->getDescription();
+        $bean->cost = $changeableAudioSession->getCost();
+        R::store($bean);
+    }
 
 
+    //добавить аудисессию в абонемент
+    public function addInAbonement(Audio $audioForAbonement)
+    {
+        //audiosession_id
+        //abonement_id
+        $bean = R::dispense('audiosforaudiosession');
+        $bean->audiosession_id = $audioForAbonement->getAudiosession_id();
+        $bean->abonement_id = $audioForAbonement->getAbonement_id();
+        R::store($bean);
+    }
+
+    //удалить аудисессию из абонемента
+    public function removeFromAbonement(Audio $removedAudiosession)
+    {   // audiosession_id 
+        // abonement_id
+        $audiosession_id = $removedAudiosession->getAudiosession_id();
+        $abonement_id = $removedAudiosession->geAbonement_id();
+        $findAudiosession = R::getRow('SELECT * FROM audiosessions_for_abonement WHERE audiosession_id=? 
+                                AND abonement_id=?', [$audiosession_id, $abonement_id]);
+        $audiosession_id = $findAudiosession['id'];
+
+        $bean = R::load('audiosessions_for_abonement', $audiosession_id);
+        R::trash($bean); 
+    }
 
 
     // --------------------------------вспомогательные----------------------------
-    public function getAudioForAudiosession(int $audiosession_id){
-        
-        $listAudio[] = R::getRow('SELECT * FROM audio_for_audiosession 
-                                        WHERE aaudiosession_id = ?', [$audiosession_id]);
-        
-        
-        foreach ($listAudio as $audio){
-            $listAudio[] = $this->convertToObject($audio);
-        }
-        return $listAudio;
-
-    }
 
     public function convertToObject(array $data): AudioSessionDTO
     {

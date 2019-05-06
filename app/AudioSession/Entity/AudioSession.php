@@ -11,7 +11,6 @@ namespace App\AudioSession\Entity;
     // audiosession_id
     // abonement_id
 
-
 class AudioSession
 {
     private $id;
@@ -19,55 +18,95 @@ class AudioSession
     private $image;
     private $description;
     private $cost;
-    private $audio_for_audiosession;
+    private $audiosession_id;
     private $abonement_id;
 
-        public function __construct(string $name, string $description, string $image, int $price)
-        {
-            $this->name = $name;
-            $this->description = $description;
-            $this->image = $image;
-            $this->price = $price;
-        }
 
-
-    /**
-     * @return mixed
-     */
+    
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function setName($name)
     {
-        return $this->description;
+        $this->name = $name;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getImage()
     {
         return $this->image;
     }
 
-    /**
-     * @return int
-     */
-    public function getPrice()
+    public function setImage($image)
     {
-        return $this->price;
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+    public function setCost($cost)
+    {
+        $this->cost = $cost;
+
+        return $this;
+    }
+
+    public function getAudiosession_id()
+    {
+        return $this->audiosession_id;
+    }
+
+    public function setAudiosession_id($audiosession_id)
+    {
+        $this->audiosession_id = $audiosession_id;
+
+        return $this;
+    }
+
+    public function getAbonement_id()
+    {
+        return $this->abonement_id;
+    }
+
+    public function setAbonement_id($abonement_id)
+    {
+        $this->abonement_id = $abonement_id;
+
+        return $this;
     }
 }
+
+
+    

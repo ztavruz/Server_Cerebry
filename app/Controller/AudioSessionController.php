@@ -15,12 +15,14 @@ class AudioSessionController extends Controller
     {
         $this->service = $service;
     }
-    //создать аудио+++
+    //создать аудисессию+++
     // id
-    // name 
-    // Image
+    // name
+    // image
     // discription
-    // cost  
+    // cost
+    // audiosession_id
+    // abonement_id
     public function createAudioSession()
     {
      
@@ -32,9 +34,9 @@ class AudioSessionController extends Controller
 
     }
 
-    //получить аудио +++
+    //получить аудисессию +++
     //id
-    public function getAudio()
+    public function getAudioSession()
     {
         $data_post = json_decode(file_get_contents('php://input'), true);
 
@@ -44,37 +46,37 @@ class AudioSessionController extends Controller
 
     }
 
-    //изменить данные аудио по id +++
+    //изменить данные аудисессии по id +++
     // id
     // name 
     // Image
     // discription
     // cost  
-    public function transformAudio(){
+    public function transformAudioSession(){
         $data_post = json_decode(file_get_contents('php://input'), true);
 
         $newAudio = $this->service->transformInBd($data_post);
 
     }
 
-    //добавить аудио в аудиосессию +++
+    //добавить аудисессию в абонемент +++
     // audio_id 
     // audiosession_id
-    public function addIntoAudiosession(){
+    public function addIntoAbonement(){
         $data_post = json_decode(file_get_contents('php://input'), true);
 
         $newAudio = $this->service->addInAudiosession($data_post);
     }
 
-    //удалить аудио из аудиосессии
-    public function removeFromAudiosession(){
+    //удалить аудисессию из абонемента
+    public function removeFromAbonement(){
         $data_post = json_decode(file_get_contents('php://input'), true);
 
         $removedAudio = $this->service->deleteInAudiosession($data_post);
     }
 
-    //получить данные всех аудио 
-    public function getAllAudio(){
+    //получить данные всех аудисессий 
+    public function getAllAudiosession(){
 
     }
 
