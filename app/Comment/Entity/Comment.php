@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace App\Comment\Entity;
 
-class CommentDTO{
-    // -id
-	// -user_id
-	// -audiosession
-	// -text
-	// -time
-    // -approved (bool)
+class Comment{
+    // id
+    // user_id
+    // audiosession_id
+    // time
+    // approved
+    // comment_id
+    // audiosession_id
     public $id;
     public $user_id;
     public $audiosession_id;

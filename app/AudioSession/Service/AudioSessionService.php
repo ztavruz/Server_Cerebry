@@ -18,7 +18,7 @@ class AudioSessionService
 
      // tested +
     //создать аудисессию
-    public function createAudioSession(array $data_post): Audio
+    public function create(array $data_post)
     {   //id
         //name
         //image
@@ -33,38 +33,36 @@ class AudioSessionService
         $newAudioSession->setDescription($data_post['description']);
         $newAudioSession->setCost($data_post['cost']);
 
-        $this->repository->saveInBd($newAudioSession);
-
-        return $newAudioSession;
+        $this->repository->create($newAudioSession);
     }
 
     // tested +
     //получить аудисессию зб БД по id
-    public function getFromBd(array $data_post): Audio
+    public function getOne(array $data_post): Audio
     {   // id
         $thisAudioSession = new Audio();
         $thisAudioSession->setId($data_post['id']);
 
-        $thisAudioSession = $this->repository->getFromBd($thisAudioSession);
+        $thisAudioSession = $this->repository->getOne($thisAudioSession);
         return $thisAudioSession;
     }
 
     // tested +
     //изменить аудисессию 
-    public function changeToBd(array $data_post)
+    public function change(array $data_post)
     {   // id
         // name 
         // image
         // discription
         // cost  
-        $changeableAudioSession = new Audio();
+        $changeableAudioSession = new AudioSession();
         $changeableAudioSession->setId($data_post['id']);
         $changeableAudioSession->setName($data_post['name']);
         $changeableAudioSession->setImage($data_post['image']);
         $changeableAudioSession->setDescription($data_post['description']);
         $changeableAudioSession->setCost($data_post['cost']);
 
-        $changeableAudioSession = $this->repository->changeToBd($changeableAudioSession);
+        $changeableAudioSession = $this->repository->change($changeableAudioSession);
         
     }
 
@@ -73,7 +71,7 @@ class AudioSessionService
     public function addInAbonement(array $data_post)
     {   //audiosession_id
         //abonement_id
-        $audioForAbonement = new Audio();
+        $audioForAbonement = new AudioSession();
         $audioForAbonement->setAudiosession_id($data_post['audiosession_id']);
         $audioForAbonement->setAbonement_id($data_post['abonement_id']);
         $audioForAbonement = $this->repository->addInAbonement($audioForAbonement);

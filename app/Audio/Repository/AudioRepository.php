@@ -9,7 +9,7 @@ use App\Audio\Entity\Audio;
 class AudioRepository
 {   
     //создать аудио
-    public function saveInBd(Audio $newAudio)
+    public function create(Audio $newAudio)
     {
         $bean = R::dispense("audios");
         $bean->name = $newAudio->getName();
@@ -20,16 +20,17 @@ class AudioRepository
     }
 
     //получить аудио зб БД по id
-    public function getFromBd(Audio $thisAudio)
+    public function getOne(Audio $thisAudio)
     {
         $thisAudio_id = $thisAudio->getId();
         $thisAudio = R::getRow("SELECT * FROM audios WHERE id = ?", [$thisAudio_id]);
         return $this->convertToObject($thisAudio);
-        // return $thisAudio;
+        
+        return $thisAudio;
     }
 
     //изменить аудио 
-    public function changeToBd(Audio $changeableAudio)
+    public function change(Audio $changeableAudio)
     {   // id
         // name 
         // Image

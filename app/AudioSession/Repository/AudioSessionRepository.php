@@ -5,14 +5,14 @@ namespace App\AudioSession\Repository;
 
 use RedBeanPHP\R;
 use App\AudioSession\Entity\AudioSession;
-use App\AudioSession\Entity\AudioForAUdiosessionDTO;
+
 
 class AudioSessionRepository
 {   
     //создать аудисессию
-    public function saveInBd(Audio $newAudioSession)
+    public function createAudioSession(AudioSession $newAudioSession)
     {
-        $bean = R::dispense("audios");
+        $bean = R::dispense("audiosession");
         $bean->name = $newAudioSession->getName();
         $bean->image = $newAudioSession->getImage();
         $bean->description = $newAudioSession->getDescription();
@@ -21,7 +21,7 @@ class AudioSessionRepository
     }
 
     //получить аудисессию зб БД по id
-    public function getFromBd(Audio $thisAudioSession)
+    public function getOne(AudioSession $thisAudioSession)
     {
         $thisAudioSession_id = $thisAudioSession->getId();
         $thisAudioSession = R::getRow("SELECT * FROM audios WHERE id = ?", [$thisAudioSession_id]);
@@ -30,7 +30,7 @@ class AudioSessionRepository
     }
 
     //изменить аудисессию 
-    public function changeToBd(Audio $changeableAudioSession)
+    public function change(AudioSession $changeableAudioSession)
     {   // id
         // name 
         // Image
@@ -38,7 +38,7 @@ class AudioSessionRepository
         // cost  
         $changeableAudioSession_id = $changeableAudioSession->getId();
 
-        $bean = R::load('audios', $changeableAudioSession_id);
+        $bean = R::load('audiosession', $changeableAudioSession_id);
         $bean->name = $changeableAudioSession->getName();
         $bean->image= $changeableAudioSession->getImage();
         $bean->description = $changeableAudioSession->getDescription();
@@ -48,7 +48,7 @@ class AudioSessionRepository
 
 
     //добавить аудисессию в абонемент
-    public function addInAbonement(Audio $audioForAbonement)
+    public function addInAbonement(AudioSession $audioForAbonement)
     {
         //audiosession_id
         //abonement_id
@@ -59,7 +59,7 @@ class AudioSessionRepository
     }
 
     //удалить аудисессию из абонемента
-    public function removeFromAbonement(Audio $removedAudiosession)
+    public function removeFromAbonement(AudioSession $removedAudiosession)
     {   // audiosession_id 
         // abonement_id
         $audiosession_id = $removedAudiosession->getAudiosession_id();
@@ -75,13 +75,13 @@ class AudioSessionRepository
 
     // --------------------------------вспомогательные----------------------------
 
-    public function convertToObject(array $data): AudioSessionDTO
+    public function convertToObject(array $data): AudioSession
     {
 
         // Получаем отражение класса
-        $refl = new \ReflectionClass(AudioSessionDTO::class);
+        $refl = new \ReflectionClass(AudioSession::class);
         // Создаем объект игнорируя конструктор
-        /** @var AudioSessionDTO $object */
+        /** @var AudioSession $object */
         $object = $refl->newInstanceWithoutConstructor();
 
         // Получаем все свойства которые есть в классе AudioSession

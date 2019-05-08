@@ -19,7 +19,7 @@ class AudioService
 
     // tested +
     //создать аудио
-    public function createAudio(array $data_post): Audio
+    public function create(array $data_post): Audio
     {   // id
         // name 
         // image
@@ -31,25 +31,25 @@ class AudioService
         $newAudio->setDescription($data_post['description']);
         $newAudio->setCost($data_post['cost']);
 
-        $this->repository->saveInBd($newAudio);
+        $this->repository->create($newAudio);
 
         return $newAudio;
     }
 
     // tested +
     //получить аудио зб БД по id
-    public function getFromBd(array $data_post): Audio
+    public function getOne(array $data_post): Audio
     {   // id
         $thisAudio = new Audio();
         $thisAudio->setId($data_post['id']);
 
-        $thisAudio = $this->repository->getFromBd($thisAudio);
+        $thisAudio = $this->repository->getOne($thisAudio);
         return $thisAudio;
     }
 
     // tested +
     //изменить аудио 
-    public function changeToBd(array $data_post)
+    public function change(array $data_post)
     {   // id
         // name 
         // image
@@ -62,7 +62,7 @@ class AudioService
         $changeableAudio->setDescription($data_post['description']);
         $changeableAudio->setCost($data_post['cost']);
 
-        $changeableAudio = $this->repository->changeToBd($changeableAudio);
+        $changeableAudio = $this->repository->change($changeableAudio);
         
     }
 

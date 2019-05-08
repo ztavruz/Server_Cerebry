@@ -7,12 +7,13 @@ use App\Controller\Controller;
 use Appp\Comment\Service\ServiceComment;
 
 class CommentController  extends Controller{
-  // -id
-	// -user_id
-	// -audiosession_id
-	// -text
-	// -time
-	// -approved (bool)
+	// id
+	// user_id
+	// audiosession_id
+	// time
+	// approved
+	// comment_id
+	// audiosession_id
 
 	private $service;
 
