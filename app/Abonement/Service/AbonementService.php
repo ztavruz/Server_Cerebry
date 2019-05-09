@@ -28,8 +28,6 @@ class AbonementService
     
         $newAbonement = new Abonement();
         $newAbonement->setName($data_post['name']);
-        $newAbonement->seTime_start($data_post['time_start']);
-        $newAbonement->setTime_end($data_post['time_end']);
         $newAbonement->setCost($data_post['cost']);
 
         $this->repository->create($newAbonement);

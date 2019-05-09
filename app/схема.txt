@@ -10,32 +10,36 @@
                                     //аблокировать пользователя 
                                     //удалить пользователя
 
+
 user
     id
 	firstName
 	lastName
 	middleName
-	password
+    gender 
 	birthday
+
 	email
-	approved (bool)
-	phone
-	role (Roles)
+    password
+
     registration_date (timestamp)
     region
    	city
     street
     build
     flat
-    zip_code
+    phone
     skype
-    gender (Enum 0, 1)
-    abonements_for_user[]
 
-user_for_city
+    approved (bool)
+    role (Roles)
+
+abonement_for_user
     id
-    user_id;
-    city_id;
+    abonement_id
+    user_id
+    time_start
+    time_end
 
 
  -------------------------------------------audio--------------------------------------------------
@@ -50,14 +54,7 @@ audio
     name
     image
     discription
-    cost    
-    audio_id 
-    audiosession_id     
-
-audio_for_audiosession              (if value not found)
-    audio_id 
-    audiosession_id
-
+    cost         
 
  -------------------------------------------audiosession--------------------------------------------------  
                                     //создать аудиосессию +
@@ -73,14 +70,15 @@ audiosession
     image
     discription
     cost
-    audiosession_id
-    abonement_id
 
-audiosession_for_abonement           (if value not found)
+audio_for_audiosession              (if value not found)
+    audio_id 
+    audiosession_id
+
+comments_for_audiosession            (if value not found)
     id
+    comment_id
     audiosession_id
-    abonement_id
-
 
  -------------------------------------------comment--------------------------------------------------
                                     //создать комментарий
@@ -91,18 +89,9 @@ audiosession_for_abonement           (if value not found)
                                     //получить все комментарий относящиеся к аудиосессии
 comment
     id
-    user_id
-    audiosession_id
+    text
     time
-    approved
-    comment_id
-    audiosession_id
-
-comments_for_audiosession            (if value not found)
-    id
-    comment_id
-    audiosession_id
-    
+    user_id
 
  -------------------------------------------abonement--------------------------------------------------
                                     //создать абонемент
@@ -116,14 +105,9 @@ abonement
     time_start
     time_end
     cost 
-    abonement_id
-    user_id
 
-abonement_for_user
+audiosession_for_abonement           (if value not found)
     id
+    audiosession_id
     abonement_id
-    user_id
-    time_start
-    time_end
-
 ---------------------------------------------------------------------------------------
