@@ -1,5 +1,6 @@
 <?php
 
+use App\AudioSession\Repository\AudioRepository;
 use Engine\Container\Container;
 
 use App\Controller\AudioSessionController;
@@ -13,8 +14,10 @@ use App\User\Repository\UserRepository;
 $container = new Container();
 
 
+$container->set(AudioRepository::class, new AudioRepository());
+
 $container->set(AudioSessionRepository::class, new AudioSessionRepository());
-$container->set(AudioSessionService::class, new AudioSessionService( $container->get(AudioSessionRepository::class) ));
+$container->set(AudioSessionService::class, new AudioSessionService( $container->get(AudioSessionRepository::class), $container->get(AudioRepository::class) ));
 $container->set(AudioSessionController::class, new AudioSessionController( $container->get(AudioSessionService::class) ));
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 
+use App\AudioSession\DataTransfer\AudioSessionDTO;
 use App\Controller\Controller;
 use App\AudioSession\Entity\AudioSession;
 use App\General\Entity\One_to_many;
@@ -34,29 +35,34 @@ class AudioSessionController extends Controller
     {
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $newAudioSession = new AudioSession();
-        $newAudioSession->setName($data_post['name']);
-        $newAudioSession->setImage($data_post['image']);
-        $newAudioSession->setDescription($data_post['description']);
-        $newAudioSession->setCost($data_post['cost']);
+        $audioSessionDTO = new AudioSessionDTO();
+        $audioSessionDTO->setName($data_post['name']);
+        $audioSessionDTO->setCost($data_post['cost']);
+        $audioSessionDTO->setImage($data_post['image']);
+        $audioSessionDTO->setDescription($data_post['description']);
 
-        $newAudioSession = $this->service->create($newAudioSession);
 
-        echo $this->json($newComment);
+        $this->service->create($audioSessionDTO);
+
     }
 
     //получить аудисессию +++
     //id
     public function getOneAudioSession()
     {
-        $data_post = json_decode(file_get_contents('php://input'), true);
+        $id = (int)$_GET['id'];
 
-        $thisAudioSession = new Audio();
-        $thisAudioSession->setId($data_post['id']);
-        $thisAudioSession = $this->service->getOne($thisAudioSession);
+        $audioSession = $this->service->one($id);
 
-        echo $this->json($thisAudioSession);
+        echo $this->json($audioSession);
 
+    }
+
+    public function getAll()
+    {
+        $audioSessions = $this->service->getAll();
+
+        echo $this->json($audioSessions);
     }
 
     //изменить данные аудисессии по id +++
@@ -114,6 +120,21 @@ class AudioSessionController extends Controller
         $allAudio =$this->service->getAllAudio($allAudio);
 
         return $allAudio;
+    }
+
+    public function connect()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        /**{
+            "audiosession_id" : 1,
+            "audio_id": "2"
+            }
+         */
+
+        $connect = $this->service->connect($data['audiosession_id'], $data['audio_id']);
+
+        echo $this->json($connect);
     }
 
 }

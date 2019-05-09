@@ -3,11 +3,6 @@ declare(strict_types=1);
 
 namespace App\AudioSession\Entity;
 
-    // id
-    // name
-    // image
-    // discription
-    // cost
 
 class AudioSession
 {
@@ -16,8 +11,13 @@ class AudioSession
     private $image;
     private $description;
     private $cost;
+    private $audios = [];
 
 
+    public function addAudio(Audio $audio): void
+    {
+        $this->audios[] = $audio;
+    }
     
     public function getId()
     {
@@ -77,6 +77,14 @@ class AudioSession
         $this->cost = $cost;
 
         return $this;
+    }
+
+    /**
+     * @return Audio[]
+     */
+    public function getAudios(): array
+    {
+        return $this->audios;
     }
 }
 

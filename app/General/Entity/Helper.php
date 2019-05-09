@@ -29,29 +29,7 @@ class Helper
         return $object;
     }
 
-    public function convertToObjectAudioSession(array $data): AudioSession
-    {
 
-        // Получаем отражение класса
-        $refl = new \ReflectionClass(AudioSession::class);
-        // Создаем объект игнорируя конструктор
-        /** @var AudioSession $object */
-        $object = $refl->newInstanceWithoutConstructor();
-
-        // Получаем все свойства которые есть в классе AudioSession
-        $props = $refl->getProperties();
-
-        // Заполняем свойства
-        foreach ($props as $prop){
-            $prop->setAccessible(true);
-
-            if(isset($data[$prop->getName()])){
-                $prop->setValue($object, $data[$prop->getName()]);
-            }
-        }
-
-        return $object;
-    }
 
     public function convertToObjectComment(array $data): Comment
     {

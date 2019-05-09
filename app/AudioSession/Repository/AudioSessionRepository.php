@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\AudioSession\Repository;
 
+use App\AudioSession\Entity\Audio;
+use App\AudioSession\Entity\AudioSessionAudio;
 use RedBeanPHP\R;
 use App\AudioSession\Entity\AudioSession;
 use App\General\Entity\One_to_many;
@@ -14,7 +16,7 @@ class AudioSessionRepository
     //создать аудисессию
     public function create(AudioSession $newAudioSession)
     {
-        $bean = R::dispense("audiosession");
+        $bean = R::dispense("audiosessions");
         $bean->name = $newAudioSession->getName();
         $bean->image = $newAudioSession->getImage();
         $bean->description = $newAudioSession->getDescription();
@@ -23,15 +25,49 @@ class AudioSessionRepository
     }
 
     //получить аудисессию из БД по id
-    public function getOne(AudioSession $thisAudioSession)
+    public function getOne(int $audioSession_id)
     {
-        $thisAudioSession_id = $thisAudioSession->getId();
-        $helper = new Helper();
+        $dataAudioSession = R::getRow("SELECT * FROM audiosessions WHERE id = ?", [$audioSession_id]);
 
-        $thisAudioSession = R::getRow("SELECT * FROM audiosession WHERE id = ?", [$thisAudioSession_id]);
-        return $helper->convertToObjectAudioSession($thisAudioSession);
-        
+        $audioSession = new AudioSession();
+        $audioSession->setId($dataAudioSession["id"]);
+        $audioSession->setName($dataAudioSession["name"]);
+        $audioSession->setName($dataAudioSession["cost"]);
+
+        $dataAudioSessionAudio = R::getAll("SELECT * FROM audiosessionaudio WHERE audiosession_id = ?",
+            [$audioSession->getId()]
+        );
+
+
+
+        foreach ($dataAudioSessionAudio as $row){
+
+            $data = R::getRow("SELECT * FROM audios WHERE id = ?", [$row['audio_id']]);
+
+            $audio = new Audio($data['name'], (int)$data['cost']);
+            $audio->setId((int)$data['id']);
+            $audioSession->addAudio($audio);
+
+        }
+
+        return $audioSession;
+
     }
+
+    public function getAll()
+    {
+        $dataAudioSessions = R::getAll("SELECT * FROM audiosessions");
+
+        $result = [];
+
+        foreach ($dataAudioSessions as $row){
+            $result[] = $this->getOne((int)$row['id']);
+        }
+
+        return $result;
+    }
+
+
 
     //изменить аудисессию 
     public function change(AudioSession $changeableAudioSession)
@@ -83,6 +119,37 @@ class AudioSessionRepository
             $listAudio[] = $helper->convertToObjectOne_to_many($audio);
         }
         return $listAudio;
+    }
+
+    public function saveConnect(AudioSessionAudio $audioSessionAudio): void
+    {
+        $bean = R::dispense("audiosessionaudio");
+        $bean->audiosession_id = $audioSessionAudio->getAudioSession()->getId();
+        $bean->audio_id = $audioSessionAudio->getAudio()->getId();
+        R::store($bean);
+    }
+
+    private function convertToObject(array $audioSession): AudioSession
+    {
+        // Получаем отражение класса
+        $refl = new \ReflectionClass(AudioSession::class);
+        // Создаем объект игнорируя конструктор
+        /** @var AudioSession $object */
+        $object = $refl->newInstanceWithoutConstructor();
+
+        // Получаем все свойства которые есть в классе AudioSession
+        $props = $refl->getProperties();
+
+        // Заполняем свойства
+        foreach ($props as $prop){
+            $prop->setAccessible(true);
+
+            if(isset($audioSession[$prop->getName()])){
+                $prop->setValue($object, $audioSession[$prop->getName()]);
+            }
+        }
+
+        return $object;
     }
 
 }

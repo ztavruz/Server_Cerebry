@@ -6,6 +6,8 @@ require_once dirname(__DIR__) . "/vendor/autoload.php";
 use Engine\Container\Container;
 use RedBeanPHP\R as R;
 
+exit("test");
+
 if(!R::testConnection()){
     R::setup("mysql:host=localhost;dbname=test", "root", "1234");
     // R::setup("mysql:host=localhost;dbname=u0301994_ServerCerebry", "ztavruz", "ztavruz123");
