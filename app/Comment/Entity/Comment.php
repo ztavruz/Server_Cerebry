@@ -4,19 +4,15 @@ declare(strict_types=1);
 namespace App\Comment\Entity;
 
 class Comment{
-    // id
-    // user_id
-    // audiosession_id
-    // time
-    // approved
-    // comment_id
-    // audiosession_id
+
     public $id;
-    public $user_id;
-    public $audiosession_id;
     public $text;
     public $time;
+    public $audiosession_id;
+    public $user_id;
     public $approved;
+
+   
 
     /**
      * Get the value of id
@@ -27,19 +23,15 @@ class Comment{
     }
 
     /**
-     * Get the value of user_id
+     * Set the value of id
+     *
+     * @return  self
      */ 
-    public function getUser_id()
+    public function setId($id)
     {
-        return $this->user_id;
-    }
+        $this->id = $id;
 
-    /**
-     * Get the value of audiosession
-     */ 
-    public function getAudiosession_id()
-    {
-        return $this->audiosession_id;
+        return $this;
     }
 
     /**
@@ -51,6 +43,18 @@ class Comment{
     }
 
     /**
+     * Set the value of text
+     *
+     * @return  self
+     */ 
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
      * Get the value of time
      */ 
     public function getTime()
@@ -59,10 +63,74 @@ class Comment{
     }
 
     /**
+     * Set the value of time
+     *
+     * @return  self
+     */ 
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of audiosession_id
+     */ 
+    public function getAudiosession_id()
+    {
+        return $this->audiosession_id;
+    }
+
+    /**
+     * Set the value of audiosession_id
+     *
+     * @return  self
+     */ 
+    public function setAudiosession_id($audiosession_id)
+    {
+        $this->audiosession_id = $audiosession_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of user_id
+     */ 
+    public function getUser_id()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set the value of user_id
+     *
+     * @return  self
+     */ 
+    public function setUser_id($user_id)
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    /**
      * Get the value of approved
      */ 
     public function getApproved()
     {
         return $this->approved;
+    }
+
+    /**
+     * Set the value of approved
+     *
+     * @return  self
+     */ 
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
+
+        return $this;
     }
 }

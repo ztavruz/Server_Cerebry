@@ -3,41 +3,45 @@ declare(strict_types=1);
 
 namespace App\Comment\Service;
 
+use App\Comment\Entity\Comment;
 use App\Comment\Repository\CommentRepository;
-Use App\Comment\Entity\CommentDTO;
+use App\General\Entity\One_to_many;
+
 
 class CommentService{
 
     private $repository;
 
-    public function __construct(CommentRepository $repository){
-
+    public function __construct(CommentRepository $repository)
+    {
         $this->repository = $repository;
-
     }
 
-    public function createNewComment(array $content){
-    // -id
-	// -user_id
-	// -audiosession_id
-	// -text
-	// -time
-    // -approved (bool)
-        
-        $newComment = new CommentDTO();
-        $newComment->user_id = $content['user_id'];
-        $newComment->audiosession_id =$content['audiosession_id'];
-        $newComment->text = $content['text'];
-        $newComment->time = $content['time'];
 
-        $this->repository->saveComment($newComment);
-        return $newComment;
+    // tested +
+    //создать коментарий
+    public function create(Comment $newComment)
+    {   
+        $this->repository->create($newComment);
     }
-    public function defineComments(array $arrayData){
 
-        $dataComment = new CommentDTO();
-        $dataComment->audiosession_id = $arrayData['audiosession_id'];
+    // tested +
+    //получить коментарий зб БД по id
+    public function getOne(Comment $thisComment): Audio
+    {   
+        $thisComment = $this->repository->getOne($thisComment);
+        return $thisComment;
+    }
 
-        $this->repository->getComments($dataComment);
+    // tested +
+    //изменить коментарий
+    public function change(Comment $changeableComment)
+    {   
+        $changeableComment = $this->repository->change($changeableComment);
+    }
+
+    public function getAllComment(Comment $allComment){
+        $allComment = $this->repository->getAllComment($allComment);
+        return $allComment;
     }
 }

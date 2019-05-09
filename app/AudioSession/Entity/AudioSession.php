@@ -8,8 +8,6 @@ namespace App\AudioSession\Entity;
     // image
     // discription
     // cost
-    // audiosession_id
-    // abonement_id
 
 class AudioSession
 {
@@ -18,8 +16,6 @@ class AudioSession
     private $image;
     private $description;
     private $cost;
-    private $audiosession_id;
-    private $abonement_id;
 
 
     
@@ -79,30 +75,6 @@ class AudioSession
     public function setCost($cost)
     {
         $this->cost = $cost;
-
-        return $this;
-    }
-
-    public function getAudiosession_id()
-    {
-        return $this->audiosession_id;
-    }
-
-    public function setAudiosession_id($audiosession_id)
-    {
-        $this->audiosession_id = $audiosession_id;
-
-        return $this;
-    }
-
-    public function getAbonement_id()
-    {
-        return $this->abonement_id;
-    }
-
-    public function setAbonement_id($abonement_id)
-    {
-        $this->abonement_id = $abonement_id;
 
         return $this;
     }

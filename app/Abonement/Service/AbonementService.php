@@ -54,45 +54,53 @@ class AbonementService
         // cost 
         // abonement_id
         // user_id 
-        $changeableAbonement = new Abonement();
-        $changeableAbonement->setId($data_post['id']);
-        $changeableAbonement->setName($data_post['name']);
-        $changeableAbonement->setImage($data_post['image']);
-        $changeableAbonement->setDescription($data_post['description']);
-        $changeableAbonement->setCost($data_post['cost']);
 
         $changeableAbonement = $this->repository->change($changeableAbonement);
         
     }
 
     // tested +
-    //добавить абонемент к пользователю
-    public function addInAbonement(array $data_post)
-    {   // abonement_id
-        // user_id
-        // time_start
-        // time_end
-        $abonementForUser = new Abonement();
-        $abonementForUser->setAudiosession_id($data_post['abonement_id']);
-        $abonementForUser->setAbonement_id($data_post['user_id']);
-        $abonementForUser = $this->repository->addInAbonement($abonementForUser);
-
-       
+    //добавить аудисессию в абонемент
+    public function addInAbonement(One_to_many $addedAudiosession)
+    {   
+        $addedAudiosession = $this->repository->addInAbonement($addedAudiosession);
     }
 
     // tested +
-    //удалить абонемент у пользователя
-    public function removeFromAbonement(array $data_post)
-    {   // abonement_id
-        // user_id
-        // time_start
-        // time_end
-        $removedUser = new Abonement();
-        $removedUser->setAudiosession_id($data_post['abonement_id']);
-        $removedUser->setAbonement_id($data_post['user_id']);
-        $removedUser = $this->repository->removeFromAbonement($removedUser);
-
+    //удалить аудисессию из абонемента
+    public function removeFromAbonement(One_to_many $removedAudiosession)
+    {   
+        $removedAudiosession = $this->repository->removeFromAbonement($removedAudiosession);
     }
+
+    // // tested +
+    // //добавить абонемент к пользователю
+    // public function addInAbonement(array $data_post)
+    // {   // abonement_id
+    //     // user_id
+    //     // time_start
+    //     // time_end
+    //     $abonementForUser = new Abonement();
+    //     $abonementForUser->setAudiosession_id($data_post['abonement_id']);
+    //     $abonementForUser->setAbonement_id($data_post['user_id']);
+    //     $abonementForUser = $this->repository->addInAbonement($abonementForUser);
+
+       
+    // }
+
+    // // tested +
+    // //удалить абонемент у пользователя
+    // public function removeFromAbonement(array $data_post)
+    // {   // abonement_id
+    //     // user_id
+    //     // time_start
+    //     // time_end
+    //     $removedUser = new Abonement();
+    //     $removedUser->setAudiosession_id($data_post['abonement_id']);
+    //     $removedUser->setAbonement_id($data_post['user_id']);
+    //     $removedUser = $this->repository->removeFromAbonement($removedUser);
+
+    // }
 
 
 }

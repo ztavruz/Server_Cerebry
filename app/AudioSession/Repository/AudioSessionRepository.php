@@ -5,12 +5,14 @@ namespace App\AudioSession\Repository;
 
 use RedBeanPHP\R;
 use App\AudioSession\Entity\AudioSession;
+use App\General\Entity\One_to_many;
+use App\General\Entity\Helper;
 
 
 class AudioSessionRepository
 {   
     //создать аудисессию
-    public function createAudioSession(AudioSession $newAudioSession)
+    public function create(AudioSession $newAudioSession)
     {
         $bean = R::dispense("audiosession");
         $bean->name = $newAudioSession->getName();
@@ -20,13 +22,15 @@ class AudioSessionRepository
         R::store($bean);
     }
 
-    //получить аудисессию зб БД по id
+    //получить аудисессию из БД по id
     public function getOne(AudioSession $thisAudioSession)
     {
         $thisAudioSession_id = $thisAudioSession->getId();
-        $thisAudioSession = R::getRow("SELECT * FROM audios WHERE id = ?", [$thisAudioSession_id]);
-        return $this->convertToObject($thisAudioSession);
-        // return $thisAudio;
+        $helper = new Helper();
+
+        $thisAudioSession = R::getRow("SELECT * FROM audiosession WHERE id = ?", [$thisAudioSession_id]);
+        return $helper->convertToObjectAudioSession($thisAudioSession);
+        
     }
 
     //изменить аудисессию 
@@ -46,58 +50,39 @@ class AudioSessionRepository
         R::store($bean);
     }
 
+    public function addAudio(One_to_many $addedAudio){
 
-    //добавить аудисессию в абонемент
-    public function addInAbonement(AudioSession $audioForAbonement)
-    {
-        //audiosession_id
-        //abonement_id
-        $bean = R::dispense('audiosforaudiosession');
-        $bean->audiosession_id = $audioForAbonement->getAudiosession_id();
-        $bean->abonement_id = $audioForAbonement->getAbonement_id();
+        $addedAudio = new One_to_many();
+        $bean = R::dispense("audio_for_audiosession");
+        $bean->audiosession_id = $addedAudio->getOne();
+        $bean->audio_id = $addedAudio->getMany();
         R::store($bean);
+
     }
 
-    //удалить аудисессию из абонемента
-    public function removeFromAbonement(AudioSession $removedAudiosession)
-    {   // audiosession_id 
-        // abonement_id
-        $audiosession_id = $removedAudiosession->getAudiosession_id();
-        $abonement_id = $removedAudiosession->geAbonement_id();
-        $findAudiosession = R::getRow('SELECT * FROM audiosessions_for_abonement WHERE audiosession_id=? 
-                                AND abonement_id=?', [$audiosession_id, $abonement_id]);
-        $audiosession_id = $findAudiosession['id'];
+    public function removeAudio(One_to_many $removedAudio){
+        $removedAudio = $removedAudio->getMany();
+        $audiosession_id = $removedAudio->geAOne();
+        $findAudiosession = R::getRow('SELECT * FROM audio_for_audiosession WHERE audiosession_id=? 
+                                AND abonement_id=?', [$removedAudio, $audiosession_id]);
+        $removedAudio = $findAudiosession['id'];
 
-        $bean = R::load('audiosessions_for_abonement', $audiosession_id);
+        $bean = R::load('audio_for_audiosession', $removedAudio);
         R::trash($bean); 
     }
 
+    public function getAllAudio(One_to_many $allAudio){
 
-    // --------------------------------вспомогательные----------------------------
+        $allAudio = $allAudio->getOne();
+        $allAudio = R::getRow('SELECT * FROM audio_for_audiosession 
+                                                WHERE audiosession_id=?',[$allAudio]);
+        $listAudio = [];
+        $helper = new Helper();
 
-    public function convertToObject(array $data): AudioSession
-    {
-
-        // Получаем отражение класса
-        $refl = new \ReflectionClass(AudioSession::class);
-        // Создаем объект игнорируя конструктор
-        /** @var AudioSession $object */
-        $object = $refl->newInstanceWithoutConstructor();
-
-        // Получаем все свойства которые есть в классе AudioSession
-        $props = $refl->getProperties();
-
-        // Заполняем свойства
-        foreach ($props as $prop){
-            $prop->setAccessible(true);
-
-            if(isset($data[$prop->getName()])){
-                $prop->setValue($object, $data[$prop->getName()]);
-            }
+        foreach($allAudio as $audio){
+            $listAudio[] = $helper->convertToObjectOne_to_many($audio);
         }
-
-        return $object;
+        return $listAudio;
     }
-
 
 }

@@ -4,72 +4,61 @@ declare(strict_types=1);
 namespace App\Comment\Repository;
 
 use RedBeanPHP\R;
-use App\Comment\Entity\CommentDTO;
+use App\Comment\Entity\Comment;
+use App\General\Entity\Helper;
 
 class CommentRepository{
 
-    public function saveComment(CommentDTO $newComment)
+    public function create(Comment $newComment)
     {
-        // -id
-        // -user_id
-        // -audiosession_id
-        // -text
-        // -time
-        // -approved (bool)
-        $bean = R::dispense("comments");
-        $bean->user_id = $newComment->getUser_id();
-        $bean->audiosession_id = $newComment->getAudiosession_id();
+        // text
+        // time
+        // audiosession_id
+        // user_id
+        // approved
+        $bean = R::dispense("comment");
         $bean->text = $newComment->getText();
         $bean->time = $newComment->getTime();
-        $bean->approved = true;
+        $bean->audiosession_id = $newComment->getAudiosession_id();
+        $bean->user_id = $newComment->getUser_id();
+        $bean->approved = $newComment->getApproved() ;
         R::store($bean);
 
     }
 
-    public function getAll(): array
+    //получить комментарий из БД по id
+    public function getOne(Comment $thisComment)
     {
-        $allUsers = R::getAll('SELECT * FROM users');
-        $listUsers = [];
-        foreach($allUsers as $user){
-            $listUsers[] = $this->convertToObject($user);
-        }
-        return $listUsers;
+        $thisComment = $thisComment->getId();
+        $helper = new Helper();
+
+        $thisComment = R::getRow("SELECT * FROM comment WHERE id = ?", [$thisComment]);
+        return $helper->convertToObjectAudioSession($thisComment);
+        
+    }
+    
+    public function change(Comment $changeableComment)
+    {
+        $changeableComment = $changeableComment->getId();
+
+        $bean = R::load('comment', $changeableComment);
+        $bean->text = $changeableComment->getText();
+        $bean->time = $changeableComment->getTime();
+        $bean->audiosession_id = $changeableComment->getDescription();
+        $bean->user_id = $changeableComment->getCost();
+        R::store($bean);
     }
 
-    public function getComments(CommentDTO $dataComment): array
+
+    public function getAllComment(Comment $allComment): array
     {
-        $audiosession_id = $dataComment->getAudiosession_id();
-        $allComments = R::getAll('SELECT * FROM comments WHERE audiosession_id = ?',[$audiosession_id]);
-        $listComments = [];
-        foreach($listComments as $comment){
-            $listComments[] = $this->convertToObject($comment);
+        $audiosession_id = $allComment->getAudiosession_id();
+        $allComment = R::getAll('SELECT * FROM comment WHERE audiosession_id = ?',[$audiosession_id]);
+        $listComment = [];
+        foreach($allComment as $comment){
+            $listComment[] = $this->convertToObject($comment);
         }
         
-        return $listComments;
+        return $listComment;
     }
-
-    public function convertToObject(array $data): CommentDTO
-    {
-
-        // Получаем отражение класса
-        $refl = new \ReflectionClass(CommentDTO::class);
-        // Создаем объект игнорируя конструктор
-        /** @var CommentDTO $object */
-        $object = $refl->newInstanceWithoutConstructor();
-
-        // Получаем все свойства которые есть в классе CommentDTO
-        $props = $refl->getProperties();
-
-        // Заполняем свойства
-        foreach ($props as $prop){
-            $prop->setAccessible(true);
-
-            if(isset($data[$prop->getName()])){
-                $prop->setValue($object, $data[$prop->getName()]);
-            }
-        }
-
-        return $object;
-    }
-
 }

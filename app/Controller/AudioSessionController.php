@@ -5,7 +5,17 @@ namespace App\Controller;
 
 
 use App\Controller\Controller;
+use App\AudioSession\Entity\AudioSession;
+use App\General\Entity\One_to_many;
 use App\AudioSession\Service\AudioSessionService;
+
+//создать аудисессию+++
+//получить аудисессию +++
+//изменить данные аудисессии по id +++
+//добавить аудио в аудиосессию +++
+//удалить аудио из аудиосессии +++
+//получить все аудио к аудиосессии +++
+
 
 class AudioSessionController extends Controller
 {
@@ -16,32 +26,36 @@ class AudioSessionController extends Controller
         $this->service = $service;
     }
     //создать аудисессию+++
-    // id
     // name
     // image
-    // discription
+    // description
     // cost
-    // audiosession_id
-    // abonement_id
     public function createAudioSession()
     {
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $audioSession = $this->service->create($data_post);
+        $newAudioSession = new AudioSession();
+        $newAudioSession->setName($data_post['name']);
+        $newAudioSession->setImage($data_post['image']);
+        $newAudioSession->setDescription($data_post['description']);
+        $newAudioSession->setCost($data_post['cost']);
 
-        // echo $this->json($audioSession);
+        $newAudioSession = $this->service->create($newAudioSession);
 
+        echo $this->json($newComment);
     }
 
     //получить аудисессию +++
     //id
-    public function getAudioSession()
+    public function getOneAudioSession()
     {
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $newAudio = $this->service->getOne($data_post);
+        $thisAudioSession = new Audio();
+        $thisAudioSession->setId($data_post['id']);
+        $thisAudioSession = $this->service->getOne($thisAudioSession);
 
-        echo $this->json($newAudio);
+        echo $this->json($thisAudioSession);
 
     }
 
@@ -49,34 +63,57 @@ class AudioSessionController extends Controller
     // id
     // name 
     // Image
-    // discription
+    // description
     // cost  
-    public function changeAudioSession(){
+    public function changeAudioSession()
+    {
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $newAudio = $this->service->change($data_post);
+        $changeableAudioSession = new AudioSession();
+        $changeableAudioSession->setId($data_post['id']);
+        $changeableAudioSession->setName($data_post['name']);
+        $changeableAudioSession->setImage($data_post['image']);
+        $changeableAudioSession->setDescription($data_post['description']);
+        $changeableAudioSession->setCost($data_post['cost']);
+
+        $changeableAudioSession = $this->service->change($changeableAudioSession);
 
     }
 
-    //добавить аудисессию в абонемент +++
+    //добавить аудио в аудиосессию +++
     // audio_id 
     // audiosession_id
-    public function addInAbonement(){
+    public function addAudio(){
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $newAudio = $this->service->addInAbonement($data_post);
+        $addedAudio = new One_to_many();
+        $addedAudio->setOne($data_post['audiosession_id']);
+        $addedAudio->setMany($data_post['audio_id']);
+
+        $addedAudio = $this->service->addAudio($addedAudio);
     }
 
-    //удалить аудисессию из абонемента
-    public function removeFromAbonement(){
+    //удалить аудио из аудиосессии
+    public function removeAudio(){
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $removedAudio = $this->service->removeFromAbonement($data_post);
+        $removedAudio = new One_to_many();
+        $removedAudio->setOne($data_post['audiosession_id']);
+        $removedAudio->setMany($data_post['audio_id']);
+
+        $removedAudio = $this->service->removeAudio($removedAudio);
     }
 
-    //получить данные всех аудисессий 
-    public function getAllAudiosession(){
+    //получить все аудио к аудиосессии 
+    public function getAllAudio(){
+        $data_post = json_decode(file_get_contents('php://input'), true);
 
+        $allAudio = new One_to_many();
+        $allAudio->setOne($data_post['audiosession_id']);
+
+        $allAudio =$this->service->getAllAudio($allAudio);
+
+        return $allAudio;
     }
 
 }

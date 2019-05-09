@@ -49,7 +49,6 @@ class AbonementController extends Controller
     }
 
     //изменить данные абонемента по id +++
-    // id
     // name
     // time_start
     // time_end
@@ -58,6 +57,12 @@ class AbonementController extends Controller
     // user_id 
     public function changeAbonement(){
         $data_post = json_decode(file_get_contents('php://input'), true);
+
+        $changeableAbonement = new Abonement();
+        $changeableAbonement->setName($data_post['name']);
+        $changeableAbonement->setImage($data_post['image']);
+        $changeableAbonement->setDescription($data_post['description']);
+        $changeableAbonement->setCost($data_post['cost']);
 
         $newAudio = $this->service->change($data_post);
 

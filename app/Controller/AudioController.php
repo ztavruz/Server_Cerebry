@@ -17,7 +17,6 @@ class AudioController extends Controller
     }
 
     //создать аудио+++
-    // id
     // name 
     // Image
     // discription
@@ -27,7 +26,13 @@ class AudioController extends Controller
      
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $newAudio = $this->service->create($data_post);
+        $newAudio = new Audio();
+        $newAudio->setName($data_post['name']);
+        $newAudio->setImage($data_post['image']);
+        $newAudio->setDescription($data_post['description']);
+        $newAudio->setCost($data_post['cost']);
+
+        $newAudio = $this->service->create($newAudio);
 
         echo $this->json($newAudio);
 
@@ -35,18 +40,18 @@ class AudioController extends Controller
 
     //получить аудио +++
     //id
-    public function getAudio()
+    public function geOnetAudio()
     {
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $newAudio = $this->service->getOne($data_post);
+        $thisAudio = new Audio();
+        $thisAudio->setId($data_post['id']);
+        $thisAudio = $this->repository->getOne($thisAudio);
 
         echo $this->json($newAudio);
-
     }
 
     //изменить данные аудио по id +++
-    // id
     // name 
     // Image
     // discription
@@ -54,24 +59,13 @@ class AudioController extends Controller
     public function changeAudio(){
         $data_post = json_decode(file_get_contents('php://input'), true);
 
-        $newAudio = $this->service->change($data_post);
+        $changeableAudio = new Audio();
+        $changeableAudio->setName($data_post['name']);
+        $changeableAudio->setImage($data_post['image']);
+        $changeableAudio->setDescription($data_post['description']);
+        $changeableAudio->setCost($data_post['cost']);
 
-    }
-
-    //добавить аудио в аудиосессию +++
-    // audio_id 
-    // audiosession_id
-    public function addInAudiosession(){
-        $data_post = json_decode(file_get_contents('php://input'), true);
-
-        $newAudio = $this->service->addInAudiosession($data_post);
-    }
-
-    //удалить аудио из аудиосессии
-    public function removeFromAudiosession(){
-        $data_post = json_decode(file_get_contents('php://input'), true);
-
-        $removedAudio = $this->service->removeFromAudiosession($data_post);
+        $changeableAudio = $this->service->change($changeableAudio);
     }
 
     //получить данные всех аудио 
